@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Systems & Analysis | Aditya Sreenath</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 1s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    
+        /* ── Dark Mode ── */
+        html { transition: background 0.4s, color 0.4s; }
+        html.dark body                        { background:#0a0a0a; color:#e5e5e5; }
+        html.dark nav                         { background:rgba(10,10,10,0.85) !important; border-color:#1f1f1f !important; }
+        html.dark nav a                       { color:#6b7280; }
+        html.dark nav a:hover                 { color:#fff; }
+        html.dark nav span                    { color:#9ca3af; }
+        html.dark header h1                   { color:#e5e5e5; }
+        html.dark header p                    { color:#6b7280; }
+        html.dark article h3                  { color:#e5e5e5; }
+        html.dark article p,
+        html.dark article li                  { color:#9ca3af; }
+        html.dark .text-black                 { color:#e5e5e5 !important; }
+        html.dark .text-gray-600,
+        html.dark .text-gray-700              { color:#9ca3af !important; }
+        html.dark .text-gray-500              { color:#6b7280 !important; }
+        html.dark .text-gray-400              { color:#4b5563 !important; }
+        html.dark .bg-gray-50                 { background:#111 !important; }
+        html.dark .bg-gray-100               { background:#161616 !important; }
+        html.dark .border-gray-100           { border-color:#1f1f1f !important; }
+        html.dark .border-b                  { border-color:#1f1f1f !important; }
+        html.dark .border-t                  { border-color:#1f1f1f !important; }
+        html.dark aside h4                   { color:#e5e5e5; }
+        html.dark footer                     { border-color:#1f1f1f; }
+        html.dark footer div                 { color:#4b5563 !important; }
+        html.dark .italic.text-gray-500      { color:#6b7280 !important; }
+        html.dark strong                     { color:#e5e5e5; }
+
+        /* Toggle pill */
+        #dm-toggle {
+            width:40px; height:22px; border-radius:999px;
+            border:1px solid #d1d5db; background:#f3f4f6;
+            position:relative; cursor:pointer; flex-shrink:0;
+            transition:background 0.3s, border-color 0.3s;
+        }
+        #dm-toggle::after {
+            content:''; position:absolute;
+            width:14px; height:14px; border-radius:50%;
+            background:#111; top:3px; left:3px;
+            transition:transform 0.3s, background 0.3s;
+        }
+        html.dark #dm-toggle              { background:#1f1f1f; border-color:#374151; }
+        html.dark #dm-toggle::after       { background:#e5e5e5; transform:translateX(18px); }
+
+    </style>
+</head>
+<body class="bg-white text-black antialiased">
+
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="../index.html" class="text-xs uppercase tracking-widest text-gray-400 hover:text-black transition">← Back to Portfolio</a>
+            <div class="flex items-center gap-4"><span class="text-sm font-semibold tracking-tighter uppercase">Project Archive / 06</span><button id="dm-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"></button></div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-20 px-6 max-w-4xl mx-auto fade-in">
+        <h1 class="text-5xl md:text-6xl font-light tracking-tighter mb-6">Database Systems & Analysis</h1>
+        <p class="text-gray-400 uppercase tracking-[0.2em] text-xs">Relational Modeling • SQL Optimization • ETL Pipelines</p>
+    </header>
+
+    <article class="max-w-4xl mx-auto px-6 pb-32">
+        
+        <section class="mb-20">
+            <div class="grid md:grid-cols-5 gap-12 items-start">
+                <div class="md:col-span-2">
+                    <h2 class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-4">The Objective</h2>
+                    <p class="text-xl font-light text-black leading-snug">
+                        Transforming raw socioeconomic datasets into a normalized relational architecture to identify drivers of academic success.
+                    </p>
+                </div>
+                <div class="md:col-span-3 text-gray-600 font-light leading-relaxed">
+                    <p>
+                        Data without structure is noise. In this project, I engineered a complete end-to-end database solution—from raw CSV ingestion and Python-based ETL to a fully normalized PostgreSQL schema. The goal was to build a resilient system capable of performing complex analytical queries on student performance indicators, such as parental involvement, attendance, and internet access.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-gray-50 p-8 mb-20 overflow-hidden border border-gray-100 rounded-sm">
+             <img src="../assets/images/student_er_diagram.jpg" alt="Relational Database Schema Diagram" class="w-full h-auto">
+             <p class="mt-4 text-xs text-gray-400 italic text-center">3NF Normalized Schema illustrating relationships between Students, Parental Details, and Academic Performance.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-12">
+            <aside class="space-y-8">
+                <div>
+                    <h4 class="text-xs uppercase font-bold tracking-widest mb-4 border-b pb-2">Technical Core</h4>
+                    <p class="text-gray-600 text-sm">PostgreSQL, SQL, Python (Pandas), ETL, Performance Tuning.</p>
+                    
+                </div>
+                <div>
+                    <h4 class="text-xs uppercase font-bold tracking-widest mb-4 border-b pb-2">Engineering Specs</h4>
+                    <ul class="text-gray-600 text-sm space-y-3">
+                        <li>• <span class="text-black font-semibold">Normalization:</span> 3rd Normal Form (3NF) to ensure data integrity and reduce redundancy.</li>
+                        <li>• <span class="text-black font-semibold">Optimization:</span> Custom B-Tree indexing for high-frequency analytical queries.</li>
+                        <li>• <span class="text-black font-semibold">ETL:</span> Automated Python scripts for data cleaning and relational segregation.</li>
+                    </ul>
+                    <div class="mt-8 pt-8 border-t border-gray-100">
+                    <a href="https://github.com/adityasrF12/student-performance-db-analysis" target="_blank" class="group inline-flex items-center space-x-3">
+                        <span class="text-xs uppercase tracking-widest font-bold border-b border-black pb-1 group-hover:text-gray-500 transition">View Repository</span>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
+                </div>
+                </div>
+            </aside>
+
+            <div class="md:col-span-2 space-y-12 text-lg text-gray-700 font-light leading-relaxed">
+                <section>
+                    <h3 class="text-2xl text-black font-normal mb-4">ETL & Data Segregation</h3>
+                    <p>The pipeline began with a custom <strong>Python ETL suite</strong> designed to clean and validate raw student records. Using regular expressions and validation logic, the script handled inconsistent casing and out-of-range values before segregating the flat file into four distinct relational tables: Students, ParentalDetails, SchoolAcademicDetails, and SubjectScores.</p>
+                </section>
+                
+                <section>
+                    <h3 class="text-2xl text-black font-normal mb-4">Query Performance Optimization</h3>
+                    <p>To support real-time diagnostic reporting, I implemented advanced SQL optimization techniques. By creating strategic <strong>B-Tree indexes</strong> on high-cardinality columns like `attendance` and `student_id`, I significantly reduced execution time for complex JOIN operations involving academic performance and socioeconomic indicators.</p>
+                </section>
+
+                <div class="bg-gray-50 p-8 border-l-4 border-black italic text-gray-500 text-base">
+                    "A well-optimized database is the silent engine of any AI system. By focusing on normalization and indexing, I built a foundation that turns raw records into actionable insights."
+                </div>
+
+                <section>
+                    <h3 class="text-2xl text-black font-normal mb-4">Diagnostic Analytics</h3>
+                    <p>The final system enables deep-dive diagnostic queries, such as correlating low attendance (<50%) with specific subject score categories. This allows for the identification of at-risk students through automated SQL reporting, providing a scalable model for educational intervention strategies.</p>
+                    <div class="bg-gray-100 p-8 rounded-sm mt-8">
+                        <img src="../assets/images/student_query.jpg" alt="SQL Query Result Dashboard" class="w-full h-auto shadow-sm">
+                        <p class="mt-4 text-xs text-gray-400 italic text-center">Output of optimized analytical queries correlating study time with score categories.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </article>
+
+    <footer class="py-20 border-t border-gray-100 text-center">
+        <div class="text-xs text-gray-400 uppercase tracking-widest">© 2026 Aditya Sreenath. Database Engineering and Optimization.</div>
+    </footer>
+
+
+<script>
+(function(){
+    const html = document.documentElement;
+    const btn  = document.getElementById('dm-toggle');
+    if(localStorage.getItem('darkMode') === 'true') html.classList.add('dark');
+    btn.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.setItem('darkMode', isDark);
+    });
+})();
+</script>
+</body>
+</html>

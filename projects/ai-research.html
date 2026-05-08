@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>AI Research Project | Aditya Sreenath</title>
+<style>
+        /* ── Dark Mode ── */
+        html { transition: background 0.4s, color 0.4s; }
+        html.dark body                        { background:#0a0a0a; color:#e5e5e5; }
+        html.dark nav                         { background:rgba(10,10,10,0.85) !important; border-color:#1f1f1f !important; }
+        html.dark nav a                       { color:#6b7280; }
+        html.dark nav a:hover                 { color:#fff; }
+        html.dark nav span                    { color:#9ca3af; }
+        html.dark header h1                   { color:#e5e5e5; }
+        html.dark header p                    { color:#6b7280; }
+        html.dark article h3                  { color:#e5e5e5; }
+        html.dark article p,
+        html.dark article li                  { color:#9ca3af; }
+        html.dark .text-black                 { color:#e5e5e5 !important; }
+        html.dark .text-gray-600,
+        html.dark .text-gray-700              { color:#9ca3af !important; }
+        html.dark .text-gray-500              { color:#6b7280 !important; }
+        html.dark .text-gray-400              { color:#4b5563 !important; }
+        html.dark .bg-gray-50                 { background:#111 !important; }
+        html.dark .bg-gray-100               { background:#161616 !important; }
+        html.dark .border-gray-100           { border-color:#1f1f1f !important; }
+        html.dark .border-b                  { border-color:#1f1f1f !important; }
+        html.dark .border-t                  { border-color:#1f1f1f !important; }
+        html.dark aside h4                   { color:#e5e5e5; }
+        html.dark footer                     { border-color:#1f1f1f; }
+        html.dark footer div                 { color:#4b5563 !important; }
+        html.dark .italic.text-gray-500      { color:#6b7280 !important; }
+        html.dark strong                     { color:#e5e5e5; }
+
+        /* Toggle pill */
+        #dm-toggle {
+            width:40px; height:22px; border-radius:999px;
+            border:1px solid #d1d5db; background:#f3f4f6;
+            position:relative; cursor:pointer; flex-shrink:0;
+            transition:background 0.3s, border-color 0.3s;
+        }
+        #dm-toggle::after {
+            content:''; position:absolute;
+            width:14px; height:14px; border-radius:50%;
+            background:#111; top:3px; left:3px;
+            transition:transform 0.3s, background 0.3s;
+        }
+        html.dark #dm-toggle              { background:#1f1f1f; border-color:#374151; }
+        html.dark #dm-toggle::after       { background:#e5e5e5; transform:translateX(18px); }
+</style>
+</head>
+<body class="bg-white font-['Inter']">
+    <nav class="p-8"><a href="../index.html" class="text-xs uppercase tracking-widest text-gray-400 hover:text-black">← Back to Gallery</a></nav>
+    <article class="max-w-4xl mx-auto py-20 px-6">
+        <header class="mb-20">
+            <h1 class="text-5xl font-light tracking-tighter mb-4">AI Research Project</h1>
+            <p class="text-gray-400 uppercase tracking-[0.2em] text-xs">Deep Learning • Experimental Analysis</p>
+        </header>
+        
+        <div class="grid md:grid-cols-3 gap-12">
+            <aside class="space-y-8">
+                <div>
+                    <h4 class="text-xs uppercase font-bold tracking-widest mb-2">Focus</h4>
+                    <p class="text-gray-600 text-sm">Neural Architecture Search / Model Optimization</p>
+                </div>
+                <div class="p-4 bg-gray-50 border-l-2 border-black">
+                    <p class="text-xs font-bold uppercase mb-1">Key Metric</p>
+                    <p class="text-xl font-light">94.2% Accuracy</p>
+                </div>
+            </aside>
+            <div class="md:col-span-2 space-y-8 text-lg font-light leading-relaxed text-gray-700">
+                <p>This project investigated [Problem Statement]. By implementing [Methodology], I was able to achieve a significant improvement in [Metric].</p>
+                <h3 class="text-2xl text-black font-normal italic">Methodology</h3>
+                <p>[Details about dataset, training parameters, and loss functions.]</p>
+            </div>
+        </div>
+    </article>
+
+<script>
+(function(){
+    const html = document.documentElement;
+    const btn  = document.getElementById('dm-toggle');
+    if(localStorage.getItem('darkMode') === 'true') html.classList.add('dark');
+    btn.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.setItem('darkMode', isDark);
+    });
+})();
+</script>
+</body>
+</html>

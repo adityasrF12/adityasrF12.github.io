@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Sreenath | Data Scientist & ML Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        /* ── Warp Hero ── */
+        #hero-section { position:relative; overflow:hidden; background:#000; }
+        #warp-canvas  { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+        .hero-content { position:relative; z-index:2; }
+        #hero-section::after {
+            content:''; position:absolute; inset:0;
+            background:radial-gradient(ellipse 60% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.55) 100%);
+            pointer-events:none; z-index:1;
+        }
+
+        /* ── Skill Bubbles ── */
+        .skill-bubble {
+            position:absolute; border-radius:50%;
+            display:flex; align-items:center; justify-content:center;
+            text-align:center; font-size:0.72rem; font-weight:600;
+            color:white; cursor:pointer; user-select:none; z-index:10;
+            transition: box-shadow 0.3s ease, transform 0.15s ease;
+        }
+        .skill-bubble::after { content:attr(data-skill); padding:10px; pointer-events:none; }
+        .skill-bubble:hover  { box-shadow:0 0 60px rgba(255,255,255,0.35) !important; transform:scale(1.12); z-index:50; }
+        .star-dot { position:absolute; background:white; border-radius:50%; z-index:1; animation:twinkle 5s infinite; }
+        @keyframes twinkle { 0%,100%{opacity:0.25} 50%{opacity:0.9} }
+
+        /* ── Timeline dot ── */
+        .timeline-dot {
+            width:10px; height:10px; background:#fff;
+            border:2px solid #d1d5db; border-radius:50%;
+            position:absolute; left:-6px; top:8px;
+        }
+        #experience .timeline-dot { background:#000; }
+
+        /* ── Cert badge ── */
+        .cert-badge {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:8px 18px; border:1px solid #e5e7eb;
+            font-size:0.78rem; letter-spacing:0.05em;
+            text-transform:uppercase;
+            transition:background 0.3s, color 0.3s;
+        }
+        .cert-badge:hover { background:#000; color:#fff; }
+
+        /* ── Scroll reveal ── */
+        .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity:1; transform:none; }
+
+        /* ── Dark Mode ── */
+        html { transition: background 0.4s, color 0.4s; }
+        html.dark body                        { background:#0a0a0a; color:#e5e5e5; }
+        html.dark nav                         { background:rgba(10,10,10,0.85) !important; border-color:#1f1f1f !important; }
+        html.dark nav span, html.dark nav a   { color:#9ca3af; }
+        html.dark nav a:hover                 { color:#fff; }
+        html.dark #education                  { background:#111 !important; }
+        html.dark #skills                     { background:#050505 !important; }
+        html.dark h2,html.dark h3            { color:#e5e5e5; }
+        html.dark p,html.dark li             { color:#9ca3af; }
+        html.dark .text-black                { color:#e5e5e5 !important; }
+        html.dark .text-gray-600,
+        html.dark .text-gray-700             { color:#9ca3af !important; }
+        html.dark .text-gray-500             { color:#6b7280 !important; }
+        html.dark .border-gray-100,
+        html.dark .border-gray-200           { border-color:#1f1f1f !important; }
+        html.dark .bg-gray-50,
+        html.dark .bg-gray-100               { background:#161616 !important; }
+        html.dark span.text-xs.border        { border-color:#2d2d2d !important; color:#9ca3af !important; }
+        html.dark .cert-badge                { border-color:#2d2d2d; color:#9ca3af; }
+        html.dark .cert-badge:hover          { background:#fff; color:#000; }
+        html.dark footer                     { border-color:#1f1f1f; }
+        html.dark footer a                   { color:#e5e5e5; border-color:#e5e5e5; }
+        html.dark footer .text-gray-400      { color:#4b5563 !important; }
+        html.dark #experience .timeline-dot  { background:#0a0a0a; border-color:#4b5563; }
+        html.dark .timeline-dot              { background:#111; border-color:#4b5563; }
+        html.dark .border-l                  { border-color:#1f1f1f !important; }
+
+        /* Toggle pill */
+        #dm-toggle {
+            width:40px; height:22px; border-radius:999px;
+            border:1px solid #d1d5db; background:#f3f4f6;
+            position:relative; cursor:pointer; flex-shrink:0;
+            transition:background 0.3s, border-color 0.3s;
+        }
+        #dm-toggle::after {
+            content:''; position:absolute;
+            width:14px; height:14px; border-radius:50%;
+            background:#111; top:3px; left:3px;
+            transition:transform 0.3s, background 0.3s;
+        }
+        html.dark #dm-toggle              { background:#1f1f1f; border-color:#374151; }
+        html.dark #dm-toggle::after       { background:#e5e5e5; transform:translateX(18px); }
+    </style>
+</head>
+<body class="bg-white text-black antialiased">
+
+<!-- NAV -->
+<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <span class="text-xl font-semibold tracking-tighter uppercase">Aditya Sreenath</span>
+        <div class="flex items-center gap-8">
+            <div class="hidden md:flex space-x-10 text-sm font-medium uppercase tracking-widest text-gray-500">
+                <a href="#about"      class="hover:text-black transition">About</a>
+                <a href="#education"  class="hover:text-black transition">Education</a>
+                <a href="#experience" class="hover:text-black transition">Experience</a>
+                <a href="#skills"     class="hover:text-black transition">Skills</a>
+                <a href="#projects"   class="hover:text-black transition">Projects</a>
+            </div>
+            <button id="dm-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"></button>
+        </div>
+    </div>
+</nav>
+<script>
+(function(){
+    const html = document.documentElement;
+    const btn  = document.getElementById('dm-toggle');
+    // Restore preference
+    if(localStorage.getItem('darkMode') === 'true') html.classList.add('dark');
+    btn.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.setItem('darkMode', isDark);
+    });
+})();
+</script>
+
+<!-- HERO -->
+<section id="hero-section" class="h-screen flex flex-col justify-center items-center text-center text-white px-6">
+    <canvas id="warp-canvas"></canvas>
+    <div class="hero-content flex flex-col items-center">
+        <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-6">Data Science · Machine Learning · AI Engineering</p>
+        <h1 class="text-6xl md:text-8xl font-light tracking-tight mb-6">Precision Data Engineering.</h1>
+        <p class="text-lg md:text-xl font-light text-gray-400 max-w-2xl mb-12">Building scalable ML architectures, intelligent automation systems, and production-ready AI pipelines.</p>
+        <a href="#projects" class="px-8 py-4 border border-white text-sm uppercase tracking-widest hover:bg-white hover:text-black transition duration-500">View Selected Work</a>
+    </div>
+</section>
+<script>
+(function(){
+    const canvas=document.getElementById('warp-canvas'),ctx=canvas.getContext('2d');
+    let W,H,stars,animId,ox,oy,tox,toy;
+    const N=700,SB=2.8,SV=4.5,TL=0.82;
+    function resize(){
+        W=canvas.width=canvas.offsetWidth; H=canvas.height=canvas.offsetHeight;
+        ox=W*.52; oy=H*.46; tox=ox; toy=oy; init();
+    }
+    function rStar(){
+        const a=Math.random()*Math.PI*2,r=Math.random()*4;
+        return{x:ox+Math.cos(a)*r,y:oy+Math.sin(a)*r,ox,oy,angle:a,
+               speed:SB+Math.random()*SV,r,brightness:.4+Math.random()*.6,width:.5+Math.random()*1.2};
+    }
+    function init(){
+        stars=[];
+        for(let i=0;i<N;i++){
+            const s=rStar(); s.r=Math.random()*Math.max(W,H)*.9;
+            s.x=s.ox+Math.cos(s.angle)*s.r; s.y=s.oy+Math.sin(s.angle)*s.r; stars.push(s);
+        }
+    }
+    function draw(){
+        ctx.fillStyle=`rgba(0,0,0,${1-TL})`; ctx.fillRect(0,0,W,H);
+        if(Math.random()<.004){tox=W*(.42+Math.random()*.16);toy=H*(.38+Math.random()*.16);}
+        ox+=(tox-ox)*.003; oy+=(toy-oy)*.003;
+        for(const s of stars){
+            const px=s.x,py=s.y;
+            s.r+=s.speed*(1+s.r/(Math.max(W,H)*.3));
+            s.x=s.ox+Math.cos(s.angle)*s.r; s.y=s.oy+Math.sin(s.angle)*s.r;
+            const d=s.r/(Math.max(W,H)*.7),al=Math.min(1,d*s.brightness*1.8);
+            ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(s.x,s.y);
+            ctx.strokeStyle=`rgba(255,255,255,${al})`;ctx.lineWidth=s.width*(.5+d);ctx.stroke();
+            if(s.x<-20||s.x>W+20||s.y<-20||s.y>H+20){const ns=rStar();ns.ox=ox;ns.oy=oy;Object.assign(s,ns);}
+        }
+        const g=ctx.createRadialGradient(ox,oy,0,ox,oy,18);
+        g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(.3,'rgba(200,220,255,.4)');g.addColorStop(1,'rgba(255,255,255,0)');
+        ctx.beginPath();ctx.arc(ox,oy,18,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+        animId=requestAnimationFrame(draw);
+    }
+    function start(){resize();cancelAnimationFrame(animId);draw();}
+    window.addEventListener('resize',()=>{cancelAnimationFrame(animId);resize();draw();});
+    start();
+})();
+</script>
+
+<!-- ABOUT -->
+<section id="about" class="py-32 px-6 max-w-6xl mx-auto reveal">
+    <h2 class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-16">01 / About</h2>
+
+    <div class="grid md:grid-cols-5 gap-16 items-start">
+        <!-- Photo -->
+        <div class="md:col-span-2 flex flex-col items-center md:items-start gap-6">
+            <div class="w-64 h-64 bg-gray-100 overflow-hidden" style="clip-path:polygon(0 0,100% 0,100% 88%,88% 100%,0 100%)">
+                <img src="assets/images/profile.jpg" alt="Aditya Sreenath"
+                     class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700"
+                     onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em\'>Your Photo Here</div>'">
+            </div>
+            <div class="space-y-1 text-sm text-gray-500">
+                <p class="font-medium text-black uppercase tracking-widest text-xs mb-2">Aditya Sreenath</p>
+                <p>Dearborn, MI</p>
+                <p><a href="mailto:adityasr@umich.edu" class="hover:text-black transition">adityasr@umich.edu</a></p>
+                <p>+1 (248) 990-5926</p>
+                <div class="flex gap-4 pt-3">
+                    <a href="https://www.linkedin.com/in/adityasreenath/" target="_blank"
+                       class="text-xs uppercase tracking-widest border-b border-gray-300 pb-0.5 hover:border-black hover:text-black transition">LinkedIn</a>
+                    <a href="https://github.com/adityasrF12" target="_blank"
+                       class="text-xs uppercase tracking-widest border-b border-gray-300 pb-0.5 hover:border-black hover:text-black transition">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="md:col-span-3 space-y-8">
+            <p class="text-3xl font-light leading-snug">Five years building production systems. Now engineering intelligence into them.</p>
+
+            <div class="text-gray-600 leading-relaxed space-y-4">
+                <p>I spent five years at Capgemini architecting automation and data systems for Synchrony Financial - processing millions of records daily, building ETL pipelines handling 5GB+ of semi-structured data, and maintaining 99%+ uptime across production deployments. That foundation in production-grade engineering now shapes how I approach data science: with a builder's instinct.</p>
+                <p>Currently completing my M.S. in Data Science at the University of Michigan-Dearborn (GPA 3.78), I'm deepening expertise in deep learning, geospatial analysis, differential privacy, and generative AI. I'm targeting roles across Data Science, Data Analysis, ML/AI Engineering, and GenAI - wherever rigorous engineering meets applied intelligence.</p>
+                <p>I'm drawn to problems at the intersection of scale and precision: systems that don't just process data - they learn from it.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 pt-2">
+                <div class="border border-gray-100 p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Engineering</p>
+                    <p class="text-sm text-gray-700">5+ yrs production ETL & data pipelines</p>
+                </div>
+                <div class="border border-gray-100 p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Research</p>
+                    <p class="text-sm text-gray-700">Deep learning, CV, forecasting, GenAI</p>
+                </div>
+                <div class="border border-gray-100 p-4">
+                    <p class="text-xs uppercase tracking-widest text-gray-400 mb-2">Cloud</p>
+                    <p class="text-sm text-gray-700">AWS Certified - Lambda, DynamoDB, S3</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-2">
+                <span class="cert-badge">AWS Certified Cloud Practitioner</span>
+                <span class="cert-badge">Automation Anywhere Masters</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="py-32 bg-gray-50 px-6 reveal">
+    <div class="max-w-5xl mx-auto">
+        <h2 class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-16">02 / Education</h2>
+
+        <div class="space-y-20">
+
+            <!-- Masters -->
+            <div class="border-l border-gray-200 pl-12 relative">
+                <div class="timeline-dot" style="background:#fff;border-color:#111;"></div>
+                <div class="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+                    <div>
+                        <h3 class="text-2xl font-semibold">University of Michigan-Dearborn</h3>
+                        <p class="text-gray-500 italic mt-1">M.S. in Data Science &nbsp;&middot;&nbsp;
+                           <span class="text-black font-medium not-italic">GPA: 3.78 / 4.0</span></p>
+                    </div>
+                    <span class="text-sm font-mono text-gray-400">Sep 2024 - Apr 2026</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-8">Dearborn, MI, USA</p>
+                <p class="text-xs uppercase tracking-widest text-gray-400 mb-4">Relevant Coursework</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Probability &amp; Statistical Modeling</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Applied Regression Analysis</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Deep Learning</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Introduction to Big Data</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Big Data Analysis &amp; Visualization</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Database Systems</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Cloud Computing</span>
+                    <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Project Management & Control</span>
+                </div>
+            </div>
+
+            <!-- Bachelors -->
+            <div class="border-l border-gray-200 pl-12 relative">
+                <div class="timeline-dot" style="background:#fff;border-color:#d1d5db;"></div>
+                <div class="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+                    <div>
+                        <h3 class="text-2xl font-semibold">SRM Institute of Science and Technology</h3>
+                        <p class="text-gray-500 italic mt-1">B.Tech in Software Engineering &nbsp;&middot;&nbsp;
+                           <span class="text-black font-medium not-italic">CGPA: 7.60 / 10.0</span></p>
+                    </div>
+                    <span class="text-sm font-mono text-gray-400">Jun 2015 - May 2019</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-6">Chennai, TN, India</p>
+                <p class="text-gray-600 text-sm leading-relaxed max-w-2xl">
+                    Four-year engineering program covering software architecture, data structures &amp; algorithms, operating systems, computer networks, and database management - a systems-level foundation that directly underpins my current work in scalable data engineering and applied ML.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="py-32 px-6 max-w-5xl mx-auto reveal">
+    <h2 class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-16">03 / Professional Experience</h2>
+
+    <div class="border-l border-gray-100 pl-12 relative space-y-6">
+        <div class="timeline-dot"></div>
+
+        <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <div>
+                <h3 class="text-3xl font-light">Automation &amp; Data Engineer</h3>
+                <p class="text-sm uppercase tracking-widest text-gray-400 mt-1">Capgemini &nbsp;&middot;&nbsp; Client: Synchrony Financial</p>
+            </div>
+            <span class="text-sm font-mono text-gray-400">Dec 2019 - Aug 2024</span>
+        </div>
+
+        <p class="text-gray-500 text-sm italic max-w-2xl">
+            Five years of production engineering at scale. The tooling was RPA; the discipline was data - pipeline architecture, ETL, quality governance, and cross-functional technical leadership.
+        </p>
+
+        <!-- Impact metrics -->
+        <div class="grid md:grid-cols-3 gap-6 pt-4">
+            <div class="bg-gray-50 p-5 border-t-2 border-black">
+                <p class="text-2xl font-light mb-1">1,000+</p>
+                <p class="text-xs uppercase tracking-widest text-gray-400 leading-snug">Daily records processed across campaign pipelines</p>
+            </div>
+            <div class="bg-gray-50 p-5 border-t-2 border-black">
+                <p class="text-2xl font-light mb-1">5 GB+</p>
+                <p class="text-xs uppercase tracking-widest text-gray-400 leading-snug">ETL workflows across semi-structured file formats</p>
+            </div>
+            <div class="bg-gray-50 p-5 border-t-2 border-black">
+                <p class="text-2xl font-light mb-1">50 concurrent</p>
+                <p class="text-xs uppercase tracking-widest text-gray-400 leading-snug">Software releases validated with zero data integrity failures</p>
+            </div>
+        </div>
+
+        <!-- Bullets regrouped -->
+        <div class="space-y-8 pt-4">
+
+            <div>
+                <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Data Pipeline Engineering</p>
+                <ul class="space-y-3 text-gray-700 text-sm leading-relaxed pl-4 border-l border-gray-100">
+                    <li>Engineered a stateful pipeline processing 1,000+ daily marketing records across multi-stage workflows, using cross-referencing logic to synchronize disparate datasets - a production ETL system with business logic embedded at each transformation stage.</li>
+                    <li>Developed ETL workflows extracting and validating data from on-demand sources (MBs to 5GB+) across diverse semi-structured formats - PDF, PPT, XLSX, DOC - with schema validation and error recovery at each ingestion layer.</li>
+                </ul>
+            </div>
+
+            <div>
+                <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Data Quality &amp; Governance</p>
+                <ul class="space-y-3 text-gray-700 text-sm leading-relaxed pl-4 border-l border-gray-100">
+                    <li>Architected an end-to-end validation system cross-referencing JIRA release data against QA documentation for up to 50 concurrent software releases - equivalent to a CI/CD data quality gate enforcing integrity standards at scale.</li>
+                    <li>Standardized engineering best practices and led technical mentorship during large-scale migrations, ensuring consistent data handling standards across a multi-engineer team.</li>
+                </ul>
+            </div>
+
+            <div>
+                <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Cloud Architecture &amp; Migration</p>
+                <ul class="space-y-3 text-gray-700 text-sm leading-relaxed pl-4 border-l border-gray-100">
+                    <li>Led migration of legacy automation bots to cloud-ready A360 architecture with zero downtime - applying the same discipline required in cloud-native data platform migrations while maintaining full production SLAs.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tech tags -->
+        <div class="pt-4">
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-3">Technologies</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Python</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">SQL</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">ETL Design</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Data Validation</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Automation Anywhere A360</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">JIRA</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Power BI</span>
+                <span class="text-xs border border-gray-200 px-3 py-1 text-gray-600">Microsoft Office Suite</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="py-20 bg-black text-white overflow-hidden relative min-h-[640px] reveal">
+    <div class="w-full text-center relative z-10 pointer-events-none mb-10">
+        <h2 class="text-xs uppercase tracking-[0.3em] text-gray-500">04 / Skills &amp; Expertise</h2>
+    </div>
+
+    <div id="bubble-container" class="relative z-0 overflow-hidden w-full h-[540px] cursor-crosshair">
+        <!-- Languages & Core -->
+        <div class="skill-bubble bg-gradient-to-tr from-blue-500 to-purple-600 shadow-[0_0_30px_rgba(59,130,246,0.4)]"     data-skill="Python"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-emerald-400 to-cyan-500 shadow-[0_0_30px_rgba(52,211,153,0.4)]"    data-skill="SQL"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-indigo-500 to-blue-700 shadow-[0_0_25px_rgba(79,70,229,0.4)]"      data-skill="R"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-violet-500 to-indigo-600 shadow-[0_0_20px_rgba(139,92,246,0.4)]"   data-skill="Git"></div>
+        <!-- ML / DL -->
+        <div class="skill-bubble bg-gradient-to-tr from-orange-400 to-yellow-500 shadow-[0_0_30px_rgba(251,146,60,0.4)]"   data-skill="PyTorch"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-pink-500 to-rose-600 shadow-[0_0_25px_rgba(244,63,94,0.4)]"        data-skill="YOLOv8"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-rose-400 to-pink-600 shadow-[0_0_20px_rgba(251,113,133,0.4)]"      data-skill="LSTM"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-amber-400 to-orange-500 shadow-[0_0_20px_rgba(251,191,36,0.4)]"    data-skill="SARIMAX"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-teal-400 to-emerald-600 shadow-[0_0_20px_rgba(52,211,153,0.4)]"    data-skill="Scikit-learn"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-sky-400 to-blue-500 shadow-[0_0_20px_rgba(56,189,248,0.4)]"        data-skill="Pandas"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-lime-400 to-green-500 shadow-[0_0_18px_rgba(163,230,53,0.4)]"      data-skill="NumPy"></div>
+        <!-- GenAI / LLM -->
+        <div class="skill-bubble bg-gradient-to-tr from-fuchsia-500 to-purple-800 shadow-[0_0_30px_rgba(192,38,211,0.4)]"  data-skill="LangChain"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-violet-600 to-purple-900 shadow-[0_0_25px_rgba(124,58,237,0.4)]"   data-skill="RAG / LLMs"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-purple-400 to-fuchsia-600 shadow-[0_0_20px_rgba(168,85,247,0.4)]"  data-skill="ChromaDB"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-pink-400 to-purple-500 shadow-[0_0_18px_rgba(236,72,153,0.3)]"     data-skill="Llama 3"></div>
+        <!-- Data Engineering -->
+        <div class="skill-bubble bg-gradient-to-tr from-slate-500 to-slate-700 shadow-[0_0_20px_rgba(100,116,139,0.4)]"    data-skill="Apache Spark"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-zinc-400 to-zinc-600 shadow-[0_0_18px_rgba(161,161,170,0.3)]"      data-skill="Hadoop"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-stone-400 to-stone-600 shadow-[0_0_18px_rgba(168,162,158,0.3)]"    data-skill="ETL"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-neutral-400 to-neutral-600 shadow-[0_0_16px_rgba(163,163,163,0.3)]" data-skill="PySpark"></div>
+        <!-- Cloud AWS -->
+        <div class="skill-bubble bg-gradient-to-tr from-yellow-400 to-amber-500 shadow-[0_0_25px_rgba(250,204,21,0.4)]"    data-skill="AWS Cloud"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-green-400 to-teal-500 shadow-[0_0_18px_rgba(74,222,128,0.3)]"      data-skill="Lambda"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-cyan-400 to-sky-500 shadow-[0_0_18px_rgba(34,211,238,0.3)]"        data-skill="DynamoDB"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-blue-300 to-cyan-400 shadow-[0_0_16px_rgba(147,197,253,0.3)]"      data-skill="Rekognition"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-teal-300 to-cyan-500 shadow-[0_0_16px_rgba(94,234,212,0.3)]"       data-skill="Kinesis"></div>
+        <!-- Viz & Stats -->
+        <div class="skill-bubble bg-gradient-to-tr from-fuchsia-400 to-pink-600 shadow-[0_0_20px_rgba(236,72,153,0.3)]"   data-skill="Power BI"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-blue-400 to-indigo-400 shadow-[0_0_18px_rgba(96,165,250,0.3)]"    data-skill="Matplotlib"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-slate-400 to-slate-600 shadow-[0_0_16px_rgba(148,163,184,0.3)]"   data-skill="RPA / A360"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-lime-500 to-green-700 shadow-[0_0_16px_rgba(132,204,22,0.3)]"     data-skill="Hypothesis Testing"></div>
+        <div class="skill-bubble bg-gradient-to-tr from-teal-500 to-cyan-700 shadow-[0_0_16px_rgba(20,184,166,0.3)]"      data-skill="Diff. Privacy"></div>
+    </div>
+
+    <script>
+    (function(){
+        const container=document.getElementById('bubble-container');
+        const bubbles=document.querySelectorAll('.skill-bubble');
+        let mouseX=0,mouseY=0,isOver=false;
+
+        function createStars(){
+            container.querySelectorAll('.star-dot').forEach(s=>s.remove());
+            const n=Math.floor(container.clientWidth/5);
+            for(let i=0;i<n;i++){
+                const s=document.createElement('div');
+                s.className='star-dot';
+                s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2}px;height:${Math.random()*2}px;animation-delay:${Math.random()*5}s;animation-duration:${3+Math.random()*4}s`;
+                container.appendChild(s);
+            }
+        }
+
+        container.addEventListener('mousemove',e=>{
+            const r=container.getBoundingClientRect();
+            mouseX=e.clientX-r.left; mouseY=e.clientY-r.top; isOver=true;
+        });
+        container.addEventListener('mouseleave',()=>isOver=false);
+        window.addEventListener('resize',createStars);
+
+        const data=Array.from(bubbles).map(el=>{
+            const size=82+Math.random()*44;
+            el.style.width=size+'px'; el.style.height=size+'px';
+            const angle=Math.random()*Math.PI*2, speed=0.3+Math.random()*0.5;
+            return{el,size,
+                x:Math.random()*(container.clientWidth-size)+size/2,
+                y:Math.random()*(container.clientHeight-size)+size/2,
+                vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed, radius:size/2};
+        });
+
+        function animate(){
+            const W=container.clientWidth,H=container.clientHeight;
+            data.forEach(b=>{
+                b.x+=b.vx; b.y+=b.vy;
+                if(isOver){
+                    const dx=mouseX-b.x,dy=mouseY-b.y,d=Math.sqrt(dx*dx+dy*dy);
+                    if(d<200&&d>0){const f=(200-d)/200;b.vx-=(dx/d)*f*0.6;b.vy-=(dy/d)*f*0.6;}
+                }
+                b.vx*=0.992; b.vy*=0.992;
+                const spd=Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+                if(spd<0.15){const a=Math.random()*Math.PI*2;b.vx+=Math.cos(a)*0.15;b.vy+=Math.sin(a)*0.15;}
+                if(b.x<b.radius){b.x=b.radius;b.vx=Math.abs(b.vx);}
+                if(b.x>W-b.radius){b.x=W-b.radius;b.vx=-Math.abs(b.vx);}
+                if(b.y<b.radius){b.y=b.radius;b.vy=Math.abs(b.vy);}
+                if(b.y>H-b.radius){b.y=H-b.radius;b.vy=-Math.abs(b.vy);}
+                b.el.style.transform=`translate3d(${b.x-b.radius}px,${b.y-b.radius}px,0)`;
+            });
+            requestAnimationFrame(animate);
+        }
+        createStars(); animate();
+    })();
+    </script>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-32 px-6 max-w-6xl mx-auto reveal">
+    <h2 class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-20 text-center">05 / Projects</h2>
+    <div class="grid md:grid-cols-2 gap-16">
+
+        <a href="projects/detroit-crime.html" class="group block">
+            <div class="aspect-video bg-gray-50 mb-8 overflow-hidden relative">
+                <img src="assets/images/detroit_precinct_analysis.jpg" alt="Detroit Precinct Risk Analysis"
+                     class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Detroit Crime Forecasting</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Spatial-Temporal Analysis · Geospatial Engineering · SARIMAX &amp; LSTM</p>
+        </a>
+
+        <a href="projects/hospital-security.html" class="group block">
+            <div class="aspect-video bg-gray-50 mb-8 overflow-hidden relative border border-gray-100">
+                <img src="assets/images/privacy_distribution.jpg" alt="Differential Privacy"
+                     class="w-full h-full object-contain p-6 group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Differential Privacy in Healthcare</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Data Security · Privacy-Preserving Analytics · Laplace &amp; Gaussian Mechanisms</p>
+        </a>
+
+        <a href="projects/drowsiness-detection.html" class="group block">
+            <div class="aspect-video bg-gray-100 mb-8 overflow-hidden relative">
+                <img src="assets/images/val_predictions.jpg" alt="Drowsiness Detection"
+                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Real-Time Drowsiness Detection</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Computer Vision · YOLOv8 · Real-time Inference</p>
+        </a>
+
+        <a href="projects/smart-door.html" class="group block">
+            <div class="aspect-video bg-gray-50 mb-8 overflow-hidden relative border border-gray-100">
+                <img src="assets/images/smart_door_architecture.jpg" alt="Cloud Architecture"
+                     class="w-full h-full object-contain p-4 group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Smart Door Authentication</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Cloud Architecture · AWS · Edge Ingestion</p>
+        </a>
+
+        <a href="projects/spotify-analysis.html" class="group block">
+            <div class="aspect-video bg-gray-100 mb-8 overflow-hidden relative">
+                <img src="assets/images/spotify_popularity_predictor.jpg" alt="Spotify"
+                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Spotify Popularity Analysis</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Statistical Modeling · R · Random Forest</p>
+        </a>
+
+        <a href="projects/student-performance-db-analysis.html" class="group block">
+            <div class="aspect-video bg-gray-50 mb-8 overflow-hidden relative border border-gray-100">
+                <img src="assets/images/student_er_diagram.jpg" alt="Database Schema"
+                     class="w-full h-full object-contain p-6 group-hover:scale-105 transition duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Database Systems &amp; Performance</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Relational Modeling · SQL Optimization · ETL Pipelines</p>
+        </a>
+
+        <a href="projects/merch-recommendation.html" class="group block">
+            <div class="aspect-video bg-gray-900 mb-8 overflow-hidden relative">
+                <img src="assets/images/merch_rating.png" alt="Google Merch"
+                     class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Google Merch Recommendation</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">PySpark · Collaborative Filtering · ALS</p>
+        </a>
+
+        <a href="projects/chatbot.html" class="group block">
+            <div class="aspect-video bg-gray-50 mb-8 overflow-hidden relative border border-gray-100">
+                <img src="assets/images/chatbot_interface.jpg" alt="Job Interview Coach Bot" 
+                     class="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100">
+                <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition"></div>
+                
+            </div>
+            <h3 class="text-2xl font-light uppercase tracking-tight">Job Interview Coach Bot</h3>
+            <p class="text-gray-500 mt-3 text-sm italic">Amazon Lex · AWS Lambda · S3 Hosting · Python</p>
+        </a>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-20 border-t border-gray-100 text-center">
+    <a href="assets/docs/Aditya_Sreenath_Resume.pdf"
+       class="text-sm uppercase tracking-widest font-semibold border-b-2 border-black pb-2 hover:text-gray-500 hover:border-gray-300 transition">
+        Download Resume
+    </a>
+    <div class="mt-12 text-xs text-gray-400">© 2026 Aditya Sreenath. All Rights Reserved.</div>
+</footer>
+
+<!-- SCROLL REVEAL -->
+<script>
+(function(){
+    const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+    },{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+</script>
+
+</body>
+</html>
