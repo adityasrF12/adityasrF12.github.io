@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="620" fill="#ffffff"/>
+
+  <text x="600" y="40" text-anchor="middle" font-size="22" font-weight="600" fill="#111">RAG Research Assistant — Architecture</text>
+
+  <!-- INGESTION LANE -->
+  <text x="40" y="95" font-size="13" font-weight="700" letter-spacing="1" fill="#6b7280">INGESTION  (POST /ingest)</text>
+
+  <!-- boxes -->
+  <g font-size="13" fill="#111">
+    <!-- PDF Upload -->
+    <rect x="40" y="115" width="150" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="115" y="140" text-anchor="middle" font-weight="600">PDF Upload</text>
+    <text x="115" y="158" text-anchor="middle" font-size="11" fill="#4b5563">Streamlit sidebar</text>
+
+    <!-- Loader/Splitter -->
+    <rect x="230" y="115" width="170" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="315" y="136" text-anchor="middle" font-weight="600">PyPDFLoader +</text>
+    <text x="315" y="152" text-anchor="middle" font-weight="600">Recursive Chunking</text>
+    <text x="315" y="168" text-anchor="middle" font-size="11" fill="#4b5563">1500 chars / 150 overlap</text>
+
+    <!-- Embeddings -->
+    <rect x="440" y="115" width="170" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="525" y="140" text-anchor="middle" font-weight="600">Ollama Embeddings</text>
+    <text x="525" y="158" text-anchor="middle" font-size="11" fill="#4b5563">nomic-embed-text</text>
+
+    <!-- Pinecone -->
+    <rect x="650" y="115" width="200" height="60" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="750" y="136" text-anchor="middle" font-weight="600">Pinecone (serverless)</text>
+    <text x="750" y="153" text-anchor="middle" font-size="11" fill="#4b5563">upsert vectors by ID</text>
+    <text x="750" y="168" text-anchor="middle" font-size="11" fill="#4b5563">source = filename, page</text>
+
+    <!-- Manifest -->
+    <rect x="890" y="115" width="200" height="60" rx="8" fill="#fdf4ff" stroke="#d8b4fe"/>
+    <text x="990" y="140" text-anchor="middle" font-weight="600">manifest.json</text>
+    <text x="990" y="158" text-anchor="middle" font-size="11" fill="#4b5563">filename → vector IDs</text>
+  </g>
+
+  <!-- arrows ingestion -->
+  <path d="M190,145 L230,145" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M400,145 L440,145" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M610,145 L650,145" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M850,145 L890,145" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- divider -->
+  <line x1="40" y1="215" x2="1160" y2="215" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- QUERY LANE -->
+  <text x="40" y="255" font-size="13" font-weight="700" letter-spacing="1" fill="#6b7280">QUERY  (POST /ask)</text>
+
+  <g font-size="13" fill="#111">
+    <!-- Question -->
+    <rect x="40" y="275" width="150" height="60" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+    <text x="115" y="300" text-anchor="middle" font-weight="600">User Question</text>
+    <text x="115" y="318" text-anchor="middle" font-size="11" fill="#4b5563">Streamlit chat</text>
+
+    <!-- Embed query -->
+    <rect x="230" y="275" width="170" height="60" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+    <text x="315" y="300" text-anchor="middle" font-weight="600">Embed Query</text>
+    <text x="315" y="318" text-anchor="middle" font-size="11" fill="#4b5563">nomic-embed-text</text>
+
+    <!-- Similarity search -->
+    <rect x="440" y="275" width="180" height="60" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="530" y="296" text-anchor="middle" font-weight="600">Pinecone Similarity</text>
+    <text x="530" y="313" text-anchor="middle" font-size="11" fill="#4b5563">top k = 20 candidates</text>
+
+    <!-- Reranker -->
+    <rect x="660" y="275" width="190" height="60" rx="8" fill="#fdf4ff" stroke="#d8b4fe"/>
+    <text x="755" y="296" text-anchor="middle" font-weight="600">BGE Cross-Encoder</text>
+    <text x="755" y="313" text-anchor="middle" font-size="11" fill="#4b5563">rerank → top n = 5</text>
+
+    <!-- Decision -->
+    <polygon points="905,305 970,275 1035,305 970,335" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="970" y="302" text-anchor="middle" font-size="11" font-weight="600">any relevant</text>
+    <text x="970" y="315" text-anchor="middle" font-size="11" font-weight="600">chunks?</text>
+  </g>
+
+  <!-- arrows query -->
+  <path d="M190,305 L230,305" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M400,305 L440,305" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M620,305 L660,305" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M850,305 L905,305" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- No branch -->
+  <path d="M970,335 L970,400 L560,400" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <text x="985" y="365" font-size="11" fill="#dc2626" font-weight="600">no</text>
+  <rect x="380" y="375" width="180" height="50" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="470" y="396" text-anchor="middle" font-size="12" font-weight="600" fill="#111">Return fixed refusal</text>
+  <text x="470" y="412" text-anchor="middle" font-size="10.5" fill="#4b5563">no LLM call — hard guard</text>
+
+  <!-- Yes branch -->
+  <text x="985" y="255" font-size="11" fill="#16a34a" font-weight="600">yes</text>
+  <path d="M970,275 L970,240 L1120,240 L1120,455" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- Prompt assembly -->
+  <rect x="440" y="465" width="200" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="540" y="486" text-anchor="middle" font-size="13" font-weight="600" fill="#111">Assemble Prompt</text>
+  <text x="540" y="504" text-anchor="middle" font-size="11" fill="#4b5563">context chunks + question</text>
+
+  <!-- Llama3 -->
+  <rect x="680" y="465" width="180" height="60" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="770" y="486" text-anchor="middle" font-size="13" font-weight="600" fill="#111">Ollama · Llama 3</text>
+  <text x="770" y="504" text-anchor="middle" font-size="11" fill="#4b5563">synthesize grounded answer</text>
+
+  <!-- Streamlit output -->
+  <rect x="900" y="465" width="200" height="60" rx="8" fill="#fff7ed" stroke="#fdba74"/>
+  <text x="1000" y="486" text-anchor="middle" font-size="13" font-weight="600" fill="#111">Answer + Sources</text>
+  <text x="1000" y="504" text-anchor="middle" font-size="11" fill="#4b5563">file · page · snippet</text>
+
+  <path d="M640,495 L680,495" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M860,495 L900,495" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M1120,455 L1120,495 L1100,495" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- legend -->
+  <g font-size="11" fill="#4b5563">
+    <rect x="40" y="570" width="14" height="14" fill="#eff6ff" stroke="#93c5fd"/>
+    <text x="60" y="581">Pipeline step</text>
+    <rect x="170" y="570" width="14" height="14" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="190" y="581">Vector DB</text>
+    <rect x="280" y="570" width="14" height="14" fill="#fdf4ff" stroke="#d8b4fe"/>
+    <text x="300" y="581">Reranking / storage</text>
+    <rect x="440" y="570" width="14" height="14" fill="#fef2f2" stroke="#fca5a5"/>
+    <text x="460" y="581">Grounding guard</text>
+  </g>
+</svg>
